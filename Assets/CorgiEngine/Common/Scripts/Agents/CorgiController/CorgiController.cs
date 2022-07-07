@@ -20,7 +20,9 @@ namespace MoreMountains.CorgiEngine
 	[AddComponentMenu("Corgi Engine/Character/Core/Corgi Controller")] 
 	public class CorgiController : MonoBehaviour 
 	{
+		
 		/// the possible modes this controller can update on
+		
 		public enum UpdateModes {Update, FixedUpdate}
 		
 		/// the various states of our character
@@ -84,7 +86,7 @@ namespace MoreMountains.CorgiEngine
 		public Collider2D StandingOnCollider { get; protected set; }	
 		/// the current speed of the character
 		public Vector2 Speed { get{ return _speed; } }
-        /// the world speed of the character
+		/// the world speed of the character
 		public Vector2 WorldSpeed { get { return _worldSpeed; } }
         /// the value of the forces applied at one point in time 
         public Vector2 ForcesApplied { get; protected set; }
@@ -1731,7 +1733,7 @@ namespace MoreMountains.CorgiEngine
 			SetRaysParameters();
             State.ColliderResized = false;
         }
-
+		
 		/// <summary>
 		/// Determines whether this instance can go back to original size.
 		/// </summary>
@@ -1893,4 +1895,6 @@ namespace MoreMountains.CorgiEngine
 			}
 		}
 	}
+
+	
 }
