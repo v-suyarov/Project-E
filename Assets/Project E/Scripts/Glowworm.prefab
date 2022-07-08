@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7653890073434811866}
   - component: {fileID: 6990150558491870464}
   - component: {fileID: 3833671596973987866}
+  - component: {fileID: -4112971301726109245}
   m_Layer: 9
   m_Name: Glowworm
   m_TagString: Untagged
@@ -95,6 +96,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c90cb08598e4df429948c8855e98c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asd: 0
   controller: {fileID: 114993703828558004, guid: 74ba743a21b19d14686bcb847af7f1c1,
     type: 3}
+  DefaultPosition: {fileID: 0}
+  offset_x: 8
+  offset_y: 2
+  period: 2
+  speed: 22.1
+  error: 0.001
+--- !u!114 &-4112971301726109245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3609001407115858375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd8efbb3b74559747877e81f611c1d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -8,11 +8,14 @@ namespace MoreMountains.CorgiEngine
 {
     public class GlowwormFollow : MonoBehaviour
     {
-        
+
         public CorgiController controller;
         public Transform DefaultPosition;
-        public float offset_x=2;
-        private float max_speed=15;
+        public float offset_x = 2;
+        public float offset_y = 2;
+        public float period = 2;
+
+        private float max_speed = 15;
         public float speed = 10f;
         //dsada
         public float error = 0.1f;
@@ -22,6 +25,17 @@ namespace MoreMountains.CorgiEngine
         // Start is called before the first frame update
         void Start()
         {
+            Vector3 graf = Vector3.zero;
+
+            for (float x = 0; x < 8; x += 0.1f)
+            {
+                graf.x = x;
+                graf.y = (float)(Math.Sin(x * Math.PI / 8) + 1.5f);
+                
+                Debug.DrawLine(graf, graf+Vector3.down, Color.red, 10f);
+
+            }
+
 
         }
 
@@ -39,7 +53,33 @@ namespace MoreMountains.CorgiEngine
             {
                 if (Mathf.Abs(glowworm_local_pos.x) >= error)
                 {
-                    transform.Translate((DefaultPosition.position - transform.position).normalized * speed*Time.deltaTime, Space.World);
+                    Vector3 next_position = Vector3.zero;
+                 
+                    next_position.y = (float)( Math.Sin(glowworm_local_pos.x * Math.PI / 8+glowworm_local_pos.x) + 1.5f);
+
+                    Vector3 direction = default_local_pos - glowworm_local_pos;
+                    direction.y = next_position.y - glowworm_local_pos.y;
+                   
+
+                    if (Mathf.Abs(glowworm_local_pos.x) <= 0.01)
+                    {
+
+                    }
+
+                    //transform.Translate(direction.normalized * speed * Time.deltaTime, Space.Self);
+                    
+                    transform.position = Vector2.Lerp(transform.position, DefaultPosition.position, Time.deltaTime);
+
+
+
+                    Vector3 temp = transform.position;
+                    
+                    Vector3 temp1 = temp;
+                    temp1.x += 0.1f;
+                    Debug.DrawLine(temp, temp1, Color.red, 10f);
+
+
+                    //Debug.Log(pos_y.y.ToString()+": Y");
                 }
             }
             else if (deviation > 0.01)
@@ -56,20 +96,32 @@ namespace MoreMountains.CorgiEngine
             {
                 if (Mathf.Abs(glowworm_local_pos.x + offset_x) >= error)
                 {
-                  
+
                     Vector3 right_defaultPosition = DefaultPosition.position;
                     right_defaultPosition.x -= offset_x;
 
                     transform.Translate((right_defaultPosition - transform.position).normalized * speed * Time.deltaTime * Mathf.Abs(deviation), Space.World);
                 }
             }
-            Debug.Log(Mathf.Abs(default_local_pos.x + glowworm_local_pos.x + offset_x));
+
             def = DefaultPosition.position;
             light = transform.position;
             // Debug.Log(();
+
+            
         }
     }
+    
+}
+    public class Gizmo : MonoBehaviour
+    {
+   
+    void OnDrawGizmos() //Встроенный метод,необходим для работы с Gizmos объектами и их отрисовки
+    {
+        Gizmos.color = Color.green;
 
         
-    
+        Gizmos.DrawRay(transform.position,Vector3.right);
+    }
+
 }
