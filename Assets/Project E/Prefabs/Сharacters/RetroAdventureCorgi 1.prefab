@@ -81008,13 +81008,18 @@ PrefabInstance:
     - target: {fileID: 3833671596973987866, guid: 17db373dea60e4e49b9c13793efccfc4,
         type: 3}
       propertyPath: speed
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3833671596973987866, guid: 17db373dea60e4e49b9c13793efccfc4,
         type: 3}
       propertyPath: controller
       value: 
       objectReference: {fileID: 114993703828558004}
+    - target: {fileID: 3833671596973987866, guid: 17db373dea60e4e49b9c13793efccfc4,
+        type: 3}
+      propertyPath: flightBehavior
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3833671596973987866, guid: 17db373dea60e4e49b9c13793efccfc4,
         type: 3}
       propertyPath: DefaultPosition
