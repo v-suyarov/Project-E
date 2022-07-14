@@ -39,6 +39,8 @@ namespace MoreMountains.CorgiEngine
         private float progress =  0.5f;
         private float timeRest = 0.0f;
         private Vector2 defaultLocalPos= Vector2.zero;
+        public bool canFlyToRight = true;
+        public bool canFlyToLeft = true;
         //ошабка при сравнении цифр с плавающей точкой
         private float error = 1f;
 
@@ -56,7 +58,8 @@ namespace MoreMountains.CorgiEngine
             Debug.Log(player.GetComponent<Character>().IsFacingRight);
             if (player.GetComponent<CorgiController>().Speed.x>error&&progress<1)
             {
-                   
+                if (canFlyToRight || progress < 0.5f - offset)
+                {
                     progress += Time.deltaTime / 8 * speed;
                     Vector2 nextPos = Vector2.Lerp(new Vector2(-distanse, 0), new Vector2(distanse, 0), progress);
                     nextPos.y = GetY_ByFunction(nextPos.x, flightBehavior);
@@ -65,13 +68,14 @@ namespace MoreMountains.CorgiEngine
                     if (progress > 1)
                     {
                         progress = 1;
-                        
-                    }
-                
-            }
-            if(player.GetComponent<CorgiController>().Speed.x < -error && progress > 0)
-            {
 
+                    }
+                }
+            }
+            if (player.GetComponent<CorgiController>().Speed.x < -error && progress > 0)
+            {
+                if (canFlyToLeft || progress > 0.5f + offset)
+                { 
                     progress -= Time.deltaTime / 8 * speed;
                     Vector2 nextPos = Vector2.Lerp(new Vector2(-distanse, 0), new Vector2(distanse, 0), progress);
                     nextPos.y = GetY_ByFunction(nextPos.x, flightBehavior);
@@ -81,10 +85,12 @@ namespace MoreMountains.CorgiEngine
                     {
                         progress = 0;
 
-                    }              
+                    }
+                }
             }
             if ( Math.Abs( player.GetComponent<CorgiController>().Speed.x) <= error  )
             {
+                //если светлячок возвращается 
                 if (progress <0.5f-offset||progress>0.5f+offset)
                 {
                     float prev_progress = progress;
@@ -117,15 +123,28 @@ namespace MoreMountains.CorgiEngine
 
                     }
                 }
-                else
-                {
+                //если светлячок пределах головы, то выталкиваем его в нужное место
+                else 
+                {   //если персонаж смотрит направо
                     if (player.GetComponent<Character>().IsFacingRight)
                     {
-                        progress += Time.deltaTime / 8 * speed;
+                        //если справа у светлячка нет препатствий
+                        if(canFlyToRight)
+                            progress += Time.deltaTime / 8 * speed;
+                        //если слева у светлечка нет препятствий
+                        else if (canFlyToLeft)
+                            progress -= Time.deltaTime / 8 * speed;
+
                     }
+                    //иначе персонаж смотрит влево
                     else
                     {
-                        progress -= Time.deltaTime / 8 * speed;
+                        //если слева у светлечка нет препятствий
+                        if (canFlyToLeft)
+                            progress -= Time.deltaTime / 8 * speed;
+                        //если справа у светлячка нет препатствий
+                        else if (canFlyToRight)
+                            progress += Time.deltaTime / 8 * speed;
                     }
                     Vector2 nextPos = Vector2.Lerp(new Vector2(-distanse, 0), new Vector2(distanse, 0), progress);
                     nextPos.y = GetY_ByFunction(nextPos.x, flightBehavior);
@@ -134,11 +153,7 @@ namespace MoreMountains.CorgiEngine
                     transform.localPosition = nextPos;
                 }
             }
-            if (player.GetComponent<Character>().MovementState.CurrentState==CharacterStates.MovementStates.Idle)
-            {
-
-            }
-
+         
            
         }
 
