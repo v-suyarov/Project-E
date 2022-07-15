@@ -39,8 +39,7 @@ namespace MoreMountains.CorgiEngine
         private float progress =  0.5f;
         private float timeRest = 0.0f;
         private Vector2 defaultLocalPos= Vector2.zero;
-        public bool canFlyToRight = true;
-        public bool canFlyToLeft = true;
+        
         //ошабка при сравнении цифр с плавающей точкой
         private float error = 1f;
         private Vector3 prevPosPlayer;
@@ -57,49 +56,45 @@ namespace MoreMountains.CorgiEngine
         private void Update()
         {
 
-            
-            
-            if (player.GetComponent<CorgiController>().Speed.x>error&&progress<1)
+
+
+            if (player.GetComponent<CorgiController>().Speed.x > error && progress < 1)
             {
-                if (canFlyToRight)
-                {
+               
+                
                     progress += Time.deltaTime / 8 * speed;
                     Vector2 nextPos = Vector2.Lerp(new Vector2(-distanse, 0), new Vector2(distanse, 0), progress);
                     nextPos.y = GetY_ByFunction(nextPos.x, flightBehavior);
-                    Debug.DrawLine(transform.position, transform.position + new Vector3(0.1f, 0, 0), Color.red, 5f);
+                   
                     transform.localPosition = nextPos;
                     if (progress > 1)
                     {
                         progress = 1;
 
                     }
-                }
-                else
-                {
-                    transform.root.DetachChildren();
-
-                }
+                
+               
             }
             if (player.GetComponent<CorgiController>().Speed.x < -error && progress > 0)
             {
-                if (canFlyToLeft)
-                { 
+               
+                
                     progress -= Time.deltaTime / 8 * speed;
                     Vector2 nextPos = Vector2.Lerp(new Vector2(-distanse, 0), new Vector2(distanse, 0), progress);
                     nextPos.y = GetY_ByFunction(nextPos.x, flightBehavior);
-                    Debug.DrawLine(transform.position, transform.position + new Vector3(0.1f, 0, 0), Color.red, 5f);
+                    
                     transform.localPosition = nextPos;
                     if (progress < 0)
                     {
                         progress = 0;
 
                     }
-                }
+                
             }
-            if ( Math.Abs( player.GetComponent<CorgiController>().Speed.x) <= error  )
+            if (Math.Abs(player.GetComponent<CorgiController>().Speed.x) <= error)
             {
                 //если светл€чок возвращаетс€ 
-                if (progress <0.5f-offset||progress>0.5f+offset)
+                if (progress < 0.5f - offset || progress > 0.5f + offset)
                 {
                     float prev_progress = progress;
                     if (progress > 0.5)
@@ -123,7 +118,7 @@ namespace MoreMountains.CorgiEngine
                     Vector2 nextPos = Vector2.Lerp(new Vector2(-distanse, 0), new Vector2(distanse, 0), progress);
                     nextPos.y = GetY_ByFunction(nextPos.x, flightBehavior);
 
-                    Debug.DrawLine(transform.position, transform.position + new Vector3(0.1f, 0, 0), Color.red, 5f);
+                    
                     transform.localPosition = nextPos;
                     if (Math.Abs(progress - 0.5) < 0.02)
                     {
@@ -132,39 +127,33 @@ namespace MoreMountains.CorgiEngine
                     }
                 }
                 //если светл€чок пределах головы, то выталкиваем его в нужное место
-                else 
+                else
                 {   //если персонаж смотрит направо
                     if (player.GetComponent<Character>().IsFacingRight)
                     {
-                        //если справа у светл€чка нет препатствий
-                        if(canFlyToRight)
+                       
                             progress += Time.deltaTime / 8 * speed;
-                        //если слева у светлечка нет преп€тствий
-                        else if (canFlyToLeft)
-                            progress -= Time.deltaTime / 8 * speed;
+                     
 
                     }
                     //иначе персонаж смотрит влево
                     else
                     {
-                        //если слева у светлечка нет преп€тствий
-                        if (canFlyToLeft)
+                        
                             progress -= Time.deltaTime / 8 * speed;
-                        //если справа у светл€чка нет препатствий
-                        else if (canFlyToRight)
-                            progress += Time.deltaTime / 8 * speed;
+                        
                     }
                     Vector2 nextPos = Vector2.Lerp(new Vector2(-distanse, 0), new Vector2(distanse, 0), progress);
                     nextPos.y = GetY_ByFunction(nextPos.x, flightBehavior);
 
-                    
+
                     transform.localPosition = nextPos;
                 }
             }
 
-            
-        }
 
+            Debug.DrawLine(transform.position, transform.position + new Vector3(0.1f, 0, 0), Color.red, 4);
+        }
         public float GetY_ByFunction(float x,FlightBehavior function)
         { 
             x = Mathf.Abs(x);
@@ -200,34 +189,13 @@ namespace MoreMountains.CorgiEngine
 
             return defaultLocalPos.y;
         }
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.CompareTag("Platform"))
-            {
-                canFlyToRight = false;
-                prevPosPlayer = transform.root.position;
-            }
-        }
-        private void OnTriggerExit2D (Collider2D collision)
-        {
-            if (collision.CompareTag("Platform"))
-            {
-                canFlyToRight = true;
-
-            }
-        }
+        
     }
     
 
     public class Gizmo : MonoBehaviour
     {
 
-        void OnDrawGizmos() //¬строенный метод,необходим дл€ работы с Gizmos объектами и их отрисовки
-        {
-            Gizmos.color = Color.green;
-
-
-            Gizmos.DrawRay(transform.position, Vector3.right);
-        }
+       
     }
 }

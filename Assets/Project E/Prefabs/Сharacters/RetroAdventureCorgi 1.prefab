@@ -81060,6 +81060,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Glowworm
       objectReference: {fileID: 0}
+    - target: {fileID: 5103097671859259496, guid: 0f6ea68694a1187448cf0ad4e35c39e9,
+        type: 3}
+      propertyPath: speed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103097671859259496, guid: 0f6ea68694a1187448cf0ad4e35c39e9,
+        type: 3}
+      propertyPath: distanse
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f6ea68694a1187448cf0ad4e35c39e9, type: 3}
 --- !u!4 &7042191208877226665 stripped
