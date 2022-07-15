@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5103097671859259496}
   - component: {fileID: 3821834448535916977}
   - component: {fileID: 2498575121326107470}
+  - component: {fileID: -7950919000306459779}
   m_Layer: 9
   m_Name: Glowworm
   m_TagString: Untagged
@@ -131,3 +132,19 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!58 &-7950919000306459779
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4753434930702074293}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.56

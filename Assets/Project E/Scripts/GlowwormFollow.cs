@@ -43,22 +43,25 @@ namespace MoreMountains.CorgiEngine
         public bool canFlyToLeft = true;
         //ошабка при сравнении цифр с плавающей точкой
         private float error = 1f;
+        private Vector3 prevPosPlayer;
 
 
         private void Start()
         {   //запоминаю дефолтную позицию
             defaultLocalPos = transform.localPosition;
             player = transform.root.gameObject;
+            prevPosPlayer = transform.root.position;
             //для более удобной настройки
            
         }
         private void Update()
         {
 
-            Debug.Log(player.GetComponent<Character>().IsFacingRight);
+            
+            
             if (player.GetComponent<CorgiController>().Speed.x>error&&progress<1)
             {
-                if (canFlyToRight || progress < 0.5f - offset)
+                if (canFlyToRight)
                 {
                     progress += Time.deltaTime / 8 * speed;
                     Vector2 nextPos = Vector2.Lerp(new Vector2(-distanse, 0), new Vector2(distanse, 0), progress);
@@ -71,10 +74,15 @@ namespace MoreMountains.CorgiEngine
 
                     }
                 }
+                else
+                {
+                    transform.root.DetachChildren();
+
+                }
             }
             if (player.GetComponent<CorgiController>().Speed.x < -error && progress > 0)
             {
-                if (canFlyToLeft || progress > 0.5f + offset)
+                if (canFlyToLeft)
                 { 
                     progress -= Time.deltaTime / 8 * speed;
                     Vector2 nextPos = Vector2.Lerp(new Vector2(-distanse, 0), new Vector2(distanse, 0), progress);
@@ -153,8 +161,8 @@ namespace MoreMountains.CorgiEngine
                     transform.localPosition = nextPos;
                 }
             }
-         
-           
+
+            
         }
 
         public float GetY_ByFunction(float x,FlightBehavior function)
@@ -192,7 +200,22 @@ namespace MoreMountains.CorgiEngine
 
             return defaultLocalPos.y;
         }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Platform"))
+            {
+                canFlyToRight = false;
+                prevPosPlayer = transform.root.position;
+            }
+        }
+        private void OnTriggerExit2D (Collider2D collision)
+        {
+            if (collision.CompareTag("Platform"))
+            {
+                canFlyToRight = true;
 
+            }
+        }
     }
     
 
